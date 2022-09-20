@@ -21,5 +21,5 @@ Repositorio del módulo **Técnicas computacionales avanzadas para modelar fenó
 * Algoritmos evolutivos de un sólo objetivo.
     - Algoritmos genéticos en codificación binaria y real.
     - Optimización por Cúmulo de Partículas (PSO).
-		- Evolución diferencial.
+    - Evolución diferencial.
 * Juego evolutivo: Dilema del prisionero iterado.
