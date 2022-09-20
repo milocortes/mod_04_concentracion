@@ -13,12 +13,6 @@ Repositorio del módulo **Técnicas computacionales avanzadas para modelar fenó
     - Derivadas en múltiples dimensiones.
     - Gradientes.
     - Implementación del algoritmo de Descenso de Gradiente.
-* Introducción al Cómputo Evolutivo.
-    - Mecanismos de la evolución natural.
-    - Historia:
-        + Técnicas de optimización basadas en la evolución.
-        + Estrategias de evolución.
-        + Programación evolutiva.
 * Conceptos de Algoritmos evolutivos.
     - Codificiación.
     - Decodificación.
@@ -28,3 +22,4 @@ Repositorio del módulo **Técnicas computacionales avanzadas para modelar fenó
     - Algoritmos genéticos en codificación binaria y real.
     - Optimización por Cúmulo de Partículas (PSO).
 		- Evolución diferencial.
+* Juego evolutivo: Dilema del prisionero iterado.
