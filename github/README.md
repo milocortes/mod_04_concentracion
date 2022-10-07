@@ -1,5 +1,8 @@
 # Git
 
+### States of a file in a Git repo and the transition between them
+![](images/git_estados.jpg)
+### Git Workflow
 ![](images/git_workflow.jpg)
 ### setting a name ando email address
 ```
