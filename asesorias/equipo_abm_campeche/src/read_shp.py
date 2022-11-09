@@ -35,8 +35,8 @@ tiendas.plot(ax=ax, alpha=0.7, color="pink")
 gdf_points.plot(ax=ax)
 plt.show()
 
-tiendas.to_file("../tiendas_campeche.geojson", driver='GeoJSON')
-tiendas.to_file("../tiendas_campeche.shp")
+tiendas.to_file("../output/tiendas_campeche.geojson", driver='GeoJSON')
+tiendas.to_file("../output/tiendas_campeche.shp")
 
-gdf_points.to_file("../hogares_random.geojson", driver='GeoJSON')
-gdf_points.to_file("../hogares_random.shp")
+gdf_points.to_file("../output/hogares_random.geojson", driver='GeoJSON')
+gdf_points.to_file("../output/hogares_random.shp")
