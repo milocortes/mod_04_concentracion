@@ -168,3 +168,13 @@ f.tight_layout()
 
 # Display the figure
 plt.show()
+
+"""
+The correspondence between the numbers in the q attribute and the actual quadrants is as follows: 1 represents observations in the HH quadrant, 2 those in the LH one, 3 in the LL region, and 4 in the HL quadrant. 
+"""
+lisa.q
+
+zmvm["POBTOT_lisa"] = lisa.q
+
+zmvm.to_csv("zmvm_lisa.csv", index = False)
+
