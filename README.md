@@ -23,3 +23,11 @@ Repositorio del módulo **Técnicas computacionales avanzadas para modelar fenó
     - Optimización por Cúmulo de Partículas (PSO).
     - Evolución diferencial.
 * Juego evolutivo: Dilema del prisionero iterado.
+
+## Descarga del repositorio
+
+Para descargar el repositorio para la rama ```ccm-2023``` utiliza la instrucción:
+
+```
+git clone -b ccm-2023 https://github.com/milocortes/mod_04_concentracion.git
+```
