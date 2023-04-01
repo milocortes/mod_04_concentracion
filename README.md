@@ -31,3 +31,8 @@ Para descargar el repositorio para la rama ```ccm-2023``` utiliza la instrucció
 ```
 git clone -b ccm-2023 https://github.com/milocortes/mod_04_concentracion.git
 ```
+
+## Información adicional
+
+* [Liga del block de notas compartido](https://pad.riseup.net/p/AgTXJvafveJKL0uStAXx)
+
