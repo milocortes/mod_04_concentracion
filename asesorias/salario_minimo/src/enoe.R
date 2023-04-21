@@ -2,7 +2,6 @@
 rm(list = ls(all = TRUE)) 
 
 ################# Cargamos las biblioecas necesarias ####################3
-library(foreign)
 library(questionr)
 library(survey)
 
@@ -33,3 +32,126 @@ wtd.mean(domestico_df$ingocup, domestico_df$fac_tri)
 wtd.mean(domestico_df$ing_x_hrs, domestico_df$fac_tri)
 #
 cruza_uno <- wtd.table(domestico_df$domestico, domestico_df$imssissste, domestico_df$fac_tri)
+
+
+
+#### 21 ABRIL 2022
+
+###############################################
+### Definimos una ruta temporal para guardar los microdatos
+temporal <- tempfile()
+download.file("https://www.inegi.org.mx/contenidos/programas/enoe/15ymas/microdatos/enoe_n_2021_trim4_csv.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("csv",files)])
+sdemt <- read.csv("ENOEN_SDEMT421.csv")
+
+
+# Se selecciona la población de referencia que es: población ocupada mayor de 15 años con entrevista completa y condición de residencia válida.
+sdemt <- subset(sdemt, sdemt$clase2 == 1 & sdemt$eda>=15 & sdemt$eda<=98 & sdemt$r_def==0 & (sdemt$c_res==1 | sdemt$c_res==3))
+
+
+
+domestico_df <- subset(sdemt, domestico == 8 | domestico == 3)
+
+## Horas promedio trabajadas
+wtd.mean(domestico_df$hrsocup, domestico_df$fac_tri)
+## Ingreso promedio mensual
+wtd.mean(domestico_df$ingocup, domestico_df$fac_tri)
+## Ingreso promedio
+wtd.mean(domestico_df$ing_x_hrs, domestico_df$fac_tri)
+#
+cruza_uno <- wtd.table(domestico_df$domestico, domestico_df$imssissste, domestico_df$fac_tri)
+
+### Data frame para hacer el box plot
+
+df_long_2022 <- data.frame(horas = domestico_df$hrsocup, ing_x_hrs = domestico_df$ing_x_hrs, etiqueta = rep("ENOE TRIM 4 2022", nrow(domestico_df)))
+df_long_2021 <- data.frame(horas = domestico_df_2021$hrsocup, ing_x_hrs = domestico_df_2021$ing_x_hrs, etiqueta = rep("ENOE TRIM 4 2021", nrow(domestico_df_2021)))
+
+df_long <- rbind.data.frame(df_long_2021, df_long_2022)
+
+# Plot the chart.
+boxplot(horas ~ etiqueta, data = df_long, xlab = "Trimeste ENOE",
+   ylab = "Horas", main = "Comparación horas")
+
+
+#### 
+### ANÁLISIS DE HORAS ENTRE GRUPOS
+#####
+
+#clear workspace
+rm(list = ls(all = TRUE)) 
+
+################# Cargamos las biblioecas necesarias ####################3
+library(questionr)
+library(survey)
+library(ggplot2)
+
+###############################################
+### Definimos una ruta temporal para guardar los microdatos
+temporal <- tempfile()
+download.file("https://www.inegi.org.mx/contenidos/programas/enoe/15ymas/microdatos/enoe_n_2021_trim4_csv.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("csv",files)])
+sdemt <- read.csv("ENOEN_SDEMT421.csv")
+
+
+# Se selecciona la población de referencia que es: población ocupada mayor de 15 años con entrevista completa y condición de residencia válida.
+sdemt <- subset(sdemt, sdemt$clase2 == 1 & sdemt$eda>=15 & sdemt$eda<=98 & sdemt$r_def==0 & (sdemt$c_res==1 | sdemt$c_res==3))
+
+
+domestico_df <- subset(sdemt, domestico == 8 | domestico == 3)
+domestico_df$etiqueta <- "domestico"
+
+pea_total <- subset(sdemt, domestico == 1)
+pea_total$etiqueta <- "pea"
+
+df_groups <- rbind.data.frame(domestico_df[,c("hrsocup","etiqueta")], pea_total[,c("hrsocup","etiqueta")])
+
+# Plot the chart.
+boxplot(hrsocup ~ etiqueta, data = df_groups, xlab = "Grupo",
+   ylab = "Horas", main = "Comparación horas")
+
+
+# Without transparency (left)
+ggplot(data=df_groups, aes(x=hrsocup, group=etiqueta, fill=etiqueta)) +
+    geom_density(adjust=1.5) 
+
+###
+# Generamos primer grupo
+solo_pea <- subset(sdemt, domestico == 1)
+solo_pea$etiqueta <- "Solo PEA"
+
+pea_quehaceres_domesticos <- subset(sdemt, domestico == 3)
+pea_quehaceres_domesticos$etiqueta <- "PEA y quehaceres domésticos"
+
+df_groups <- rbind.data.frame(solo_pea[,c("hrsocup","etiqueta")], pea_quehaceres_domesticos[,c("hrsocup","etiqueta")])
+
+
+# Plot the chart.
+boxplot(hrsocup ~ etiqueta, data = df_groups, xlab = "Grupo",
+   ylab = "Horas", main = "Comparación horas")
+
+
+# Without transparency (left)
+ggplot(data=df_groups, aes(x=hrsocup, group=etiqueta, fill=etiqueta)) +
+    geom_density(adjust=1.5) 
+
+
+# Generamos primer grupo
+apoyo_hogar <- subset(sdemt, domestico == 4)
+apoyo_hogar$etiqueta <- "PEA y apoyos al hogar"
+
+pea_quehaceres_domesticos <- subset(sdemt, domestico == 3)
+pea_quehaceres_domesticos$etiqueta <- "PEA y quehaceres domésticos"
+
+df_groups <- rbind.data.frame(apoyo_hogar[,c("hrsocup","etiqueta")], pea_quehaceres_domesticos[,c("hrsocup","etiqueta")])
+
+
+# Plot the chart.
+boxplot(hrsocup ~ etiqueta, data = df_groups, xlab = "Grupo",
+   ylab = "Horas", main = "Comparación horas")
+
+
+# Without transparency (left)
+ggplot(data=df_groups, aes(x=hrsocup, group=etiqueta, fill=etiqueta)) +
+    geom_density(adjust=1.5) 
