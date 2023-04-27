@@ -155,3 +155,58 @@ boxplot(hrsocup ~ etiqueta, data = df_groups, xlab = "Grupo",
 # Without transparency (left)
 ggplot(data=df_groups, aes(x=hrsocup, group=etiqueta, fill=etiqueta)) +
     geom_density(adjust=1.5) 
+
+
+####### AGREGANDO ESQUEMA DE MUESTREO
+
+################# Cargamos las biblioecas necesarias ####################3
+library(questionr)
+library(survey)
+library(ggplot2)
+
+###############################################
+### Definimos una ruta temporal para guardar los microdatos
+temporal <- tempfile()
+download.file("https://www.inegi.org.mx/contenidos/programas/enoe/15ymas/microdatos/enoe_n_2021_trim4_csv.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("csv",files)])
+sdemt <- read.csv("ENOEN_SDEMT421.csv")
+
+
+# Se selecciona la población de referencia que es: población ocupada mayor de 15 años con entrevista completa y condición de residencia válida.
+sdemt <- subset(sdemt, sdemt$clase2 == 1 & sdemt$eda>=15 & sdemt$eda<=98 & sdemt$r_def==0 & (sdemt$c_res==1 | sdemt$c_res==3))
+
+## Definimos la variable etiqueta para identificar los grupos de acuerdo a ciertas condiciones
+
+sdemt$etiqueta<-0
+
+sdemt$etiqueta[sdemt$ domestico == 4] <- "PEA y apoyos al hogar"
+sdemt$etiqueta[sdemt$ domestico == 3] <- "PEA y quehaceres domésticos"
+
+
+sdemt <- subset(sdemt, etiqueta!="0")
+sdemt$etiqueta <- as.factor(sdemt$etiqueta)
+
+sdemt$mh_fil2 <- as.factor(sdemt$mh_fil2)
+
+## Definimos esquema de muestreo
+mydesign<-svydesign(id=~upm, strata=~est_d_tri, weight=~fac_tri, data=sdemt, nest=TRUE)
+options(survey.lonely.psu="adjust")
+
+
+svyboxplot(hrsocup~etiqueta,mydesign,all.outliers=TRUE)
+
+
+svytable(~hrsocup+etiqueta,design=mydesign,round=TRUE)
+
+svymean(~interaction(etiqueta, hrsocup), mydesign)
+
+# Plot the chart.
+boxplot(ingocup ~ etiqueta, data = sdemt, xlab = "Grupo",
+   ylab = "Horas", main = "Comparación horas")
+
+
+# Without transparency (left)
+ggplot(data=df_groups, aes(x=hrsocup, group=etiqueta, fill=etiqueta)) +
+    geom_density(adjust=1.5) 
+
