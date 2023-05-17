@@ -10,3 +10,4 @@
 * [Simulación Monte Carlo y Cadenas de Markov](markov_monte_carlo.pdf)
 * [Modelo de Ising](ising_model.pdf)
 * [Resiliencia y robustez en redes](robustness_measures.pdf)
+* [Red de Cointegración](red_cointegracion.pdf)
