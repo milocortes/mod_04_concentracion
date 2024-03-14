@@ -11,11 +11,16 @@ function branin(x1,x2; a=1, b=5.1/(4π^2), c=5/π, r=6, s=10, t=1/(8π))
     return a*(x2-b*x1^2+c*x1-r)^2 + s*(1-t)*cos(x1) + s
 end
 
+function  ∇f(X)
+    x,y = X
+    return collect(gradient(branin, x,y))
+end
+
 
 ### Steepest descent
 steepest_results = []
 
-rho = 0.01
+ρ = 0.01
 n = 1000
 x = 5
 y = 15
@@ -25,18 +30,17 @@ push!(steepest_results, [x,y,z])
 X = [x,y]
 
 for it in 1:n 
-    gt = collect(gradient(branin, x,y))
-    X = X - rho.*gt
+    gt = 
+    X = X - ρ.*∇f(X)
     x,y = X
     z = branin(x,y)
     push!(steepest_results, [x,y,z])
-    println(X)
 end
 
 ### Momentum
 momentum = []
-rho = 0.01
-beta = 0.9
+ρ = 0.01
+β = 0.9
 m = zeros(2)
 x = 5
 y = 15
@@ -47,20 +51,17 @@ push!(momentum, [x,y,z])
 X = [x,y]
 
 for it in 1:n 
-    gt = collect(gradient(branin, x,y)) 
-    m = beta.*m + gt
-    X = X - rho.*m
+    m = β.*m + ∇f(X)
+    X = X - ρ.*m
     x,y = X
     z = branin(x,y)
     push!(momentum, [x,y,z])
-
-    println(X)
 end
 
 ### Momentum Nesterov
 momentum_nesterov = []
-rho = 0.01
-beta = 0.9
+ρ = 0.01
+β = 0.9
 m = zeros(2)
 x = 5
 y = 15
@@ -71,23 +72,20 @@ push!(momentum_nesterov, [x,y,z])
 X = [x,y]
 
 for it in 1:n 
-    x,y = X + beta.*m
-    gt = collect(gradient(branin, x,y)) 
-    m = beta.*m - rho.*gt
+    X = X + β.*m
+    m = β.*m - ρ.*∇f(X)
     X = X + m
     x,y = X
     z = branin(x,y)
     push!(momentum_nesterov, [x,y,z])
-
-    println(X)
 end
 
 ### Adam
 adam = []
-rho = 0.9
-beta_uno = 0.9
-beta_dos = 0.999
-epsilon = 10^-6
+ρ = 0.9
+β₁ = 0.9
+β₂ = 0.999
+ϵ = 10^-6
 m = zeros(2)
 s = zeros(2)
 
@@ -100,22 +98,17 @@ push!(adam, [x,y,z])
 X = [x,y]
 
 for it in 1:n 
-    gt = collect(gradient(branin, x,y))
-    m = beta_uno.*m + beta_uno*(1-beta_uno).*gt
-    s = beta_dos.*s + beta_dos*(1-beta_dos).*gt.^2
+    m = β₁.*m + β₁*(1-β₁).*∇f(X)
+    s = β₂.*s + β₂*(1-β₂).*∇f(X).^2
 
-    m_tilde = m./(1-(beta_uno^(it)))
-    s_tilde = s./(1-(beta_dos^(it)))
+    m_tilde = m./(1-(β₁^(it)))
+    s_tilde = s./(1-(β₂^(it)))
 
-
-    X = X - rho .* (m_tilde ./ (sqrt.(s_tilde) .+ epsilon))
-    #(rho*(.√s_tilde .+ epsilon).^-1).*m_tilde
+    X = X - ρ .* (m_tilde ./ (sqrt.(s_tilde) .+ ϵ))
     
     x,y = X
     z = branin(x,y)
     push!(adam, [x,y,z])
-
-    println(X)
 end
 
 
@@ -135,7 +128,7 @@ scatter!(p_surface, [momentum_nesterov[i][1]], [momentum_nesterov[i][2]], [momen
 scatter!(p_surface, [adam[i][1]], [adam[i][2]], [adam[i][3]], color = :orange, label = L"Adam, $\rho=0.9$,, $\beta_1=0.9$, $\beta_2=0.99$", legend=:topleft, markersize=6)
 
 
-anim = @animate for i in 1:240
+anim = @animate for i in 1:20
     println(i)
     p_surface_giff = deepcopy(p_surface)
 
@@ -149,4 +142,5 @@ anim = @animate for i in 1:240
     scatter!(p_surface, [momentum_nesterov[i][1]], [momentum_nesterov[i][2]], [momentum_nesterov[i][3]], color = :blue, label = L"Momentum Nesterov, $\rho=0.01$, $\beta=0.9$", legend=:topleft, primary=false, markersize=6)
     scatter!(p_surface, [adam[i][1]], [adam[i][2]], [adam[i][3]], color = :orange, label = L"Adam, $\rho=0.9$,, $\beta_1=0.9$, $\beta_2=0.99$", legend=:topleft, primary=false, markersize=6)
 end
+
 gif(anim, "optimizadores.gif")
