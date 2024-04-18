@@ -2,7 +2,7 @@
 
 * [Contexto del curso](0_contexto.pdf)
 * [Introducción a la Optimización](intro_optimizacion.pdf)
-* Algoritmos Genéticos
+* [Algoritmos Genéticos](algo_geneticos.pdf)
 * Problema de optimización usando Algoritmos Genéticos
 * Particle Swarm Optimization (PSO)
 * Exploratory Dynamic Integrated Assessment Model (EDIAM)
