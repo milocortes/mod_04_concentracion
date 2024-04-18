@@ -1,0 +1,5 @@
+# Tareas
+
+* Notebooks:
+    * [Problemas de Optimización usando Métodos de primer orden](tarea_01_metodos_primer_orden.ipynb)
+
