@@ -8,7 +8,7 @@
 * [Particle Swarm Optimization (PSO)][pso.pdf]
 * [Exploratory Dynamic Integrated Assessment Model (EDIAM)](ediam_slides.pdf)
 * [Ajuste de Hiperparámetros en Modelos de Aprendizaje de Máquina con Algoritmos Bioinspirados](hiper_tuning.pdf)
-* Simulación Monte Carlo y Cadenas de Markov
+* [Simulación Monte Carlo y Cadenas de Markov](markov_monte_carlo.pdf)
 * Modelo de Ising
 * Resiliencia y robustez en redes
 * Red de Cointegración
