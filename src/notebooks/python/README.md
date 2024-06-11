@@ -11,5 +11,6 @@
     * [Concurrencia y Arquitecturas Multiprocesador](concurrencia.ipynb)
     * Test del paquete algo_optim_mod04
     * Particle Swarm Optimization (PSO)
+    * [MCMC-Metropolis](../julia/mcmc_metropolis.jl)
     * Resiliencia y robustez en redes
     * Red de Cointegración
