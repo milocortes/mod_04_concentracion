@@ -10,5 +10,5 @@
 * [Ajuste de Hiperparámetros en Modelos de Aprendizaje de Máquina con Algoritmos Bioinspirados](hiper_tuning.pdf)
 * [Simulación Monte Carlo y Cadenas de Markov](markov_monte_carlo.pdf)
 * Modelo de Ising
-* Resiliencia y robustez en redes
+* [Resiliencia y robustez en redes](robustness_measures.pdf)
 * Red de Cointegración
