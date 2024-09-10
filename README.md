@@ -22,20 +22,19 @@ Repositorio del módulo **Técnicas computacionales avanzadas para modelar fenó
     - Algoritmos genéticos en codificación binaria y real.
     - Optimización por Cúmulo de Partículas (PSO).
     - Evolución diferencial.
+    - Simulated Annealing.
 * Aplicaciones de algoritmos bioinspirados a problemas de:
     - Calibración de Modelos de Evaluación Integrada.
     - Ajuste de Hiperparámetros en Modelos de Aprendizaje de Máquina.
-* Simulación Monte Carlo y Cadenas de Markov
-* Modelo de Ising
-* Resiliencia y robustez en redes
-* Red de Cointegración
+    - Resiliencia y robustez en redes
+* Concurrencia y Arquitecturas Multiprocesador
 
 ## Descarga del repositorio
 
-Para descargar el repositorio para la rama ```ccm-2024``` utiliza la instrucción:
+Para descargar el repositorio para la rama ```csf-2024``` utiliza la instrucción:
 
 ```
-git clone -b ccm-2024 https://github.com/milocortes/mod_04_concentracion.git
+git clone -b csf-2024 https://github.com/milocortes/mod_04_concentracion.git
 ```
 
 ## Información adicional
